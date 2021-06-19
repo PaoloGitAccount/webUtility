@@ -1,0 +1,142 @@
+﻿@model webUtility.Models.User
+@{
+    ViewData["Title"] = "Thanks";
+    string userFirstName = TempData["userFirstName"].ToString();
+    int now = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+    int dob = int.Parse(Convert.ToString(TempData["userDob"]));
+    int age = (now - dob) / 10000;
+    string year = dob.ToString().Substring(0, 4);
+    string day = dob.ToString().Substring(6, 2);
+    string month = dob.ToString().Substring(4, 2);
+
+    DateTime nextBirthday = new DateTime(DateTime.Today.Year, int.Parse(month), int.Parse(day));
+    if (nextBirthday < DateTime.Today)
+    {
+        nextBirthday = nextBirthday.AddYears(1);
+    }
+
+    var calendarStartDate = nextBirthday.AddDays(-14);
+    var calendarEndDate = nextBirthday;
+
+    int numberDays = (calendarEndDate - DateTime.Today).Days;
+
+    var vowels = new List<char>() { 'a', 'e', 'i', 'o', 'u' };
+    int numberVowels = userFirstName.ToLower().Count(c => vowels.Contains(c));
+
+    var monthUrl = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+    string monthHistory = monthUrl.ElementAt(int.Parse(month) - 1);
+}
+<h1>@ViewData["Title"]</h1>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" />
+<!-- Calendar -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.min.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.print.css" media="print" />
+
+<p>Hi @userFirstName,</p>
+<p>Thank you for submitting the form!</p>
+<hr />
+@Html.DisplayNameFor(model => model.FirstName):
+@userFirstName
+<p>Number of vowels in the name @userFirstName: @numberVowels</p>
+<p>The user @userFirstName is @age years old</p>
+<p>There are @numberDays days before the next birthday, @day @monthHistory</p>
+<div class="row">
+    <div class="col-md-12">
+        <h2>Thank you</h2><br />
+        <b>Thank you for taking the time to provide your feedback.</b><br /><br />
+        @Html.ActionLink("Back to Home", "Index", "Home")
+    </div>
+</div>
+<div class="container">
+    <main role="main" class="pb-3">
+        <div id="bootstrapModalFullCalendar">
+        </div>
+        @*@RenderBody()*@
+    </main>
+</div>
+
+<!-- Calendar -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.1/fullcalendar.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#bootstrapModalFullCalendar').fullCalendar({
+            header:
+            {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            buttonText: {
+                today: 'today',
+                month: 'month',
+                week: 'week',
+                day: 'day'
+            },
+            defaultDate: '@calendarStartDate.ToString("yyyy-MM-dd")', //'2021-08-20',
+
+            eventClick: function (event, jsEvent, view) {
+                $('#modalTitle').html(event.title);
+                $('#modalBody').html(event.description);
+                $('#eventUrl').attr('href', event.url);
+                $('#fullCalModal').modal();
+                return false;
+
+                //$.ajax({
+                //    url: '/Home/GetCalendarData',
+                //    type: "GET",
+                //    dataType: "JSON",
+
+                //    success: function (result) {
+                //        var events = [];
+
+                //        $.each(result, function (i, data) {
+                //            events.push(
+                //                {
+                //                    title: data.Title,
+                //                    description: data.Desc,
+                //                    start: moment(data.Start_Date).format('YYYY-MM-DD'),
+                //                    end: moment(data.End_Date).format('YYYY-MM-DD'),
+                //                    backgroundColor: "#9501fc",
+                //                    borderColor: "#fc0101"
+                //                });
+                //        });
+
+                //        callback(events);
+                //    }
+                //});
+            },
+
+            //event: '@Url.Action("findAll", "user")'
+
+            events: [
+                {
+                    title: 'historynet - @userFirstName - @day @monthHistory', //'historynet',
+                    start: '@calendarStartDate.ToString("yyyy-MM-dd")',  //   '2021-08-20',
+                    end: '@calendarEndDate.ToString("yyyy-MM-dd")', //'2022-01-04',
+                    //url: 'https://www.historynet.com/today-in-history/june-10',
+                    url: 'https://www.historynet.com/today-in-history/@monthHistory-@day',
+
+                    //data: function () { // a function that returns an object
+                    //                return {
+                    //                dynamic_value: 'march-08'  //Math.random()
+                    //    };
+                    //            }
+                            }
+                // other events here
+            ],
+            eventClick: function (event) {
+                                if (event.url) {
+                                window.open(event.url, "_blank");
+                    return false;
+                            }
+                        }
+                    });
+    });
+
+</script>
+

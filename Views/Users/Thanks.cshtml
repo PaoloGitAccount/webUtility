@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Thanks";
+}
+<h1>@ViewData["Title"]</h1>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+<!-- qTip -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" />
+
+<!-- Full Calendar -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.min.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.print.css" media="print" />
+
+<p>........</p>
+<h4>User</h4>
+<hr />
+@*@Html.DisplayNameFor(model => model.FirstName)*@
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Thank you</h2><br />
+        <b>Thank you for taking the time to provide your feedback. We value your opinion and will be reviewing your feedback shortly. In the interim, if you have any questions around our service, please feel free to contact us.</b><br /><br />
+        @Html.ActionLink("Back to Home", "Index", "Home")
+    </div>
+</div>
+<div class="container">
+    <main role="main" class="pb-3">
+        <div id="bootstrapModalFullCalendar">
+            Thanks!!!!!!!!!
+        </div>
+        @*@RenderBody()*@
+    </main>
+</div>
+
+<!-- Full Calendar -->
+<!--<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.1/fullcalendar.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+@*@Scripts.Render("~/bundles/Script-calendar")*@
+@*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>*@
+<script>
+    $(document).ready(function () {
+        $('#bootstrapModalFullCalendar').fullCalendar({
+            header:
+            {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            buttonText: {
+                today: 'today',
+                month: 'month',
+                week: 'week',
+                day: 'day'
+            },
+
+
+            eventClick: function (event, jsEvent, view) {
+                $('#modalTitle').html(event.title);
+                $('#modalBody').html(event.description);
+                $('#eventUrl').attr('href', event.url);
+                $('#fullCalModal').modal();
+                return false;
+
+                //$.ajax({
+                //    url: '/Home/GetCalendarData',
+                //    type: "GET",
+                //    dataType: "JSON",
+
+                //    success: function (result) {
+                //        var events = [];
+
+                //        $.each(result, function (i, data) {
+                //            events.push(
+                //                {
+                //                    title: data.Title,
+                //                    description: data.Desc,
+                //                    start: moment(data.Start_Date).format('YYYY-MM-DD'),
+                //                    end: moment(data.End_Date).format('YYYY-MM-DD'),
+                //                    backgroundColor: "#9501fc",
+                //                    borderColor: "#fc0101"
+                //                });
+                //        });
+
+                //        callback(events);
+                //    }
+                //});
+            },
+
+            event : '@Url.Action("findAll", "user")'
+
+            //eventRender: function (event, element) {
+            //    element.qtip(
+            //        {
+            //            content: event.description
+            //        });
+            //},
+
+            //editable: false
+        });
+    });
+
+</script>
+
