@@ -55,6 +55,7 @@ namespace webUtility.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.CreatedTime = (DateTime)DateTime.Now;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
