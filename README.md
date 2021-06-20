@@ -17,6 +17,7 @@ It's possible to switch easily between two versions of the database, a local SQL
 Used as .NET framework, .NET Core 3.1 , Dependency Injection, using a DbContext, DbSet for the User class.
 
 Installed various NuGet packages:
+
 ⦁	Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design -Version 3.1.0
 ⦁	Install-Package Microsoft.EntityFrameworkCore.Tools -Version 3.1.0
 ⦁	Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 3.1.0
