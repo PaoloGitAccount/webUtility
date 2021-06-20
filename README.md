@@ -38,7 +38,6 @@ For the Thanks page and the Calendar, used a Javascript structure.
 USE master
 IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'UserUtilityDb')
   BEGIN
-
     CREATE DATABASE [UserUtilityDb]
     END
     GO
