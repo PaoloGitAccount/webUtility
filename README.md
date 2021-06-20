@@ -19,7 +19,9 @@ Used as .NET framework, .NET Core 3.1 , Dependency Injection, using a DbContext,
 Installed various NuGet packages:
 
 ⦁	Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design -Version 3.1.0
+
 ⦁	Install-Package Microsoft.EntityFrameworkCore.Tools -Version 3.1.0
+
 ⦁	Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 3.1.0
 
 connectionstring to the database in the appsettings.json.
