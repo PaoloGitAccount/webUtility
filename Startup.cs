@@ -44,10 +44,9 @@ namespace webUtility
                 app.UseHsts();
             }
 
-            //technique code based. 
             //If a database already exists then no action is taken, 
             //otherwise the database is created automatically from the class schema. 
-            //db.Database.EnsureCreated();
+            db.Database.EnsureCreated();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
