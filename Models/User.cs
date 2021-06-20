@@ -17,7 +17,7 @@ namespace webUtility.Models
         public DateTime DateOfBirth { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime CreatedTime { get; set; }
+        public DateTime? CreatedTime { get; set; }
 
 
         //{
